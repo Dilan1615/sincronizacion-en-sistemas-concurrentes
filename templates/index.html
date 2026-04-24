@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de Concurrencia</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Simulador de Concurrencia</h1>
+      <p>Ejercicios con hilos, mutex y semaforos</p>
+    </header>
+
+    <main class="contenedor">
+      <section class="tarjeta">
+        <h2>Elige un ejercicio</h2>
+
+        <form method="POST" class="botones">
+          <button name="ejercicio" value="panaderia">Panaderia</button>
+          <button name="ejercicio" value="lectores">Lectores</button>
+          <button name="ejercicio" value="barrera">Barrera</button>
+          <button name="ejercicio" value="gimnasio">Gimnasio</button>
+          <button name="ejercicio" value="venta">Venta Boletos</button>
+        </form>
+      </section>
+
+      <section class="tarjeta">
+        <h2>{{ titulo }}</h2>
+
+        {% if resultado %}
+        {% set ns = namespace(
+          espera=0,
+          progreso=0,
+          finaliza=0,
+          correcto=false,
+          error=false,
+          vendidos='- ',
+          esperado='- '
+        ) %}
+
+        {% for linea in resultado %}
+        {% set txt = linea|lower %}
+        {% if 'esperando' in txt or 'sin pan' in txt %}
+        {% set ns.espera = ns.espera + 1 %}
+        {% endif %}
+        {% if 'produ' in txt or 'compro' in txt or 'lee' in txt or 'escribio' in txt or 'llego' in txt or 'entrenando' in txt %}
+        {% set ns.progreso = ns.progreso + 1 %}
+        {% endif %}
+        {% if 'continua' in txt or 'salio' in txt or 'correcto' in txt or 'todos llegaron' in txt %}
+        {% set ns.finaliza = ns.finaliza + 1 %}
+        {% endif %}
+        {% if txt == 'correcto' %}
+        {% set ns.correcto = true %}
+        {% endif %}
+        {% if txt == 'error' %}
+        {% set ns.error = true %}
+        {% endif %}
+        {% if linea.startswith('Total vendidos:') %}
+        {% set ns.vendidos = linea.split(':', 1)[1].strip() %}
+        {% endif %}
+        {% if linea.startswith('Esperado:') %}
+        {% set ns.esperado = linea.split(':', 1)[1].strip() %}
+        {% endif %}
+        {% endfor %}
+
+        <div class="resumen-grid">
+          <article class="dato">
+            <span class="etiqueta">Eventos totales</span>
+            <strong>{{ resultado|length }}</strong>
+          </article>
+          <article class="dato">
+            <span class="etiqueta">En espera</span>
+            <strong>{{ ns.espera }}</strong>
+          </article>
+          <article class="dato">
+            <span class="etiqueta">Acciones</span>
+            <strong>{{ ns.progreso }}</strong>
+          </article>
+          <article class="dato">
+            <span class="etiqueta">Finalizaciones</span>
+            <strong>{{ ns.finaliza }}</strong>
+          </article>
+        </div>
+
+        {% if titulo == 'Venta Boletos' %}
+        <div class="venta-box">
+          <p><strong>Vendidos:</strong> {{ ns.vendidos }}</p>
+          <p><strong>Esperado:</strong> {{ ns.esperado }}</p>
+        </div>
+        {% endif %}
+
+        <div class="estado {% if ns.error %}estado-error{% elif ns.correcto %}estado-ok{% else %}estado-info{% endif %}">
+          {% if ns.error %}
+          <strong>Estado:</strong> Se detecto inconsistencia en la simulacion.
+          {% elif ns.correcto %}
+          <strong>Estado:</strong> Resultado correcto y consistente.
+          {% else %}
+          <strong>Estado:</strong> Simulacion completada con {{ resultado|length }} eventos.
+          {% endif %}
+        </div>
+
+        <div class="resultado">
+          <h3>Bitacora de ejecucion</h3>
+          <div class="leyenda-log">
+            <span class="chip chip-espera">En espera</span>
+            <span class="chip chip-ejecucion">En ejecucion</span>
+            <span class="chip chip-finalizado">Finalizado</span>
+            <span class="chip chip-error">Error</span>
+          </div>
+          <ol class="log-lista">
+            {% for linea in resultado %}
+            {% set txt = linea|lower %}
+            {% set tipo = 'log-info' %}
+            {% if 'esperando' in txt or 'sin pan' in txt %}
+            {% set tipo = 'log-espera' %}
+            {% elif 'produ' in txt or 'compro' in txt or 'lee' in txt or 'escribio' in txt or 'llego' in txt or 'entrenando' in txt %}
+            {% set tipo = 'log-ejecucion' %}
+            {% elif 'continua' in txt or 'salio' in txt or 'correcto' in txt or 'todos llegaron' in txt %}
+            {% set tipo = 'log-finalizado' %}
+            {% elif 'error' in txt %}
+            {% set tipo = 'log-error' %}
+            {% endif %}
+            <li class="{{ tipo }}">{{ linea }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+        {% else %}
+        <p class="vacio">Aqui apareceran los resultados.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

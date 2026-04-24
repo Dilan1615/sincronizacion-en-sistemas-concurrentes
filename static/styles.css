@@ -1,0 +1,226 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #3e2723;
+}
+
+header {
+    background: #bf360c;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+.contenedor {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.tarjeta {
+    background: #fff8e1;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.botones {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+button {
+    background: #e65100;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff6d00;
+}
+
+.resultado {
+    background: #3e2723;
+    color: #ffe0b2;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 14px;
+}
+
+.resultado p {
+    margin: 8px 0;
+}
+
+.resumen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.dato {
+    background: #fff3e0;
+    border: 1px solid #ffcc80;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.dato .etiqueta {
+    display: block;
+    color: #6d4c41;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.dato strong {
+    font-size: 1.3rem;
+    color: #bf360c;
+}
+
+.venta-box {
+    background: #fffde7;
+    border: 1px dashed #ffb74d;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+
+.venta-box p {
+    margin: 4px 0;
+}
+
+.estado {
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+
+.estado-ok {
+    background: #e8f5e9;
+    border: 1px solid #81c784;
+    color: #1b5e20;
+}
+
+.estado-error {
+    background: #ffebee;
+    border: 1px solid #ef5350;
+    color: #b71c1c;
+}
+
+.estado-info {
+    background: #fff8e1;
+    border: 1px solid #ffcc80;
+    color: #6d4c41;
+}
+
+.resultado h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #ffe0b2;
+}
+
+.leyenda-log {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: bold;
+}
+
+.chip-espera {
+    background: #fff8e1;
+    color: #f57f17;
+    border: 1px solid #ffd54f;
+}
+
+.chip-ejecucion {
+    background: #e3f2fd;
+    color: #0d47a1;
+    border: 1px solid #64b5f6;
+}
+
+.chip-finalizado {
+    background: #e8f5e9;
+    color: #1b5e20;
+    border: 1px solid #81c784;
+}
+
+.chip-error {
+    background: #ffebee;
+    color: #b71c1c;
+    border: 1px solid #ef5350;
+}
+
+.log-lista {
+    margin: 0;
+    padding-left: 20px;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.log-lista li {
+    margin: 6px 0;
+    line-height: 1.35;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.log-info {
+    background: rgba(255, 224, 178, 0.08);
+}
+
+.log-espera {
+    background: rgba(255, 213, 79, 0.18);
+    color: #fff3cd;
+    border-left: 4px solid #ffd54f;
+}
+
+.log-ejecucion {
+    background: rgba(100, 181, 246, 0.18);
+    color: #d9eeff;
+    border-left: 4px solid #64b5f6;
+}
+
+.log-finalizado {
+    background: rgba(129, 199, 132, 0.2);
+    color: #dcedc8;
+    border-left: 4px solid #81c784;
+}
+
+.log-error {
+    background: rgba(239, 83, 80, 0.18);
+    color: #ffcdd2;
+    border-left: 4px solid #ef5350;
+}
+
+@media (max-width: 640px) {
+    header {
+        padding: 20px 14px;
+    }
+
+    .tarjeta {
+        padding: 18px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+.vacio {
+    color: #6d4c41;
+}
